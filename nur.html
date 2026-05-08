@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Нур сүрөөсүнүн тафсири</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --dark: #2d3a4a; --gold: #8a7a5a; --text: #3a4a5a; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, #c8dff0 0%, #d4e8f0 25%, #e0d4ec 60%, #f0dce8 100%);
+    min-height: 100vh;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,220,240,0.6) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float1 8s ease-in-out infinite;
+    pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed; bottom: -200px; left: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(220,200,240,0.5) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float2 10s ease-in-out infinite;
+    pointer-events: none; z-index: 0;
+  }
+  @keyframes float1 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-30px,40px) scale(1.1);} }
+  @keyframes float2 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(40px,-30px) scale(1.05);} }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-20px);} to{opacity:1;transform:translateY(0);} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+
+  /* Close button */
+  .close-btn {
+    position: fixed; top: 16px; left: 16px;
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.85);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 100;
+    font-size: 16px; color: var(--dark);
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .close-btn:hover { background: rgba(255,255,255,0.9); transform: scale(1.05); }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    position: relative; z-index: 1;
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 52px 0 20px;
+    animation: fadeDown 0.8s ease both;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 700;
+    color: var(--dark); line-height: 1.2; margin-bottom: 12px;
+  }
+  .hero h1 span { color: #5a7a9a; }
+
+  .hero-sub {
+    font-size: 13px; color: #6a7a8a;
+    font-weight: 400; line-height: 1.7; margin-bottom: 20px;
+  }
+
+  .welcome-card {
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 24px;
+    padding: 22px 20px;
+    margin-bottom: 10px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .welcome-card p {
+    font-size: 15px; line-height: 1.7;
+    color: var(--text); text-align: center;
+  }
+
+  /* Stats */
+  .stats {
+    display: flex; gap: 12px;
+    margin: 16px 0;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+  .stat-item {
+    flex: 1;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 16px;
+    padding: 14px 10px; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--dark); line-height: 1;
+  }
+  .stat-label { font-size: 11px; color: #7a8a9a; margin-top: 4px; font-weight: 500; }
+
+  /* Section title */
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600;
+    color: var(--dark); margin: 28px 0 14px; text-align: center;
+  }
+
+  /* Lesson card */
+  .lesson-card {
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.75);
+    border-radius: 18px;
+    margin-bottom: 10px; overflow: hidden;
+    animation: fadeUp 0.6s ease both;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .lesson-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(100,140,180,0.15);
+  }
+
+  .lesson-top {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 18px 0;
+  }
+  .lesson-emoji { font-size: 34px; min-width: 42px; text-align: center; line-height: 1; }
+  .lesson-num-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: #5a7a9a; margin-bottom: 3px;
+  }
+  .lesson-title {
+    font-size: 14px; font-weight: 700;
+    color: var(--dark); line-height: 1.3;
+  }
+  .lesson-body { padding: 10px 18px 16px; }
+  .lesson-points { list-style: none; margin-top: 6px; }
+  .lesson-points li {
+    font-size: 12px; color: #6a7a8a;
+    padding: 2px 0 2px 14px;
+    position: relative; line-height: 1.5;
+  }
+  .lesson-points li::before { content: '—'; position: absolute; left: 0; color: #9ab8d0; }
+
+  /* Start banner */
+  .start-banner {
+    background: linear-gradient(135deg, #5a7a9a, #7a8aaa);
+    border-radius: 20px; padding: 20px;
+    text-align: center; margin: 24px 0 16px;
+    color: white;
+    animation: fadeUp 0.8s ease 0.5s both;
+  }
+  .start-banner .date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 700; margin: 6px 0;
+  }
+  .start-banner .label {
+    font-size: 12px; opacity: 0.8;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center; padding: 10px 0;
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+  .footer-text { font-size: 13px; color: #8a9aaa; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<a class="close-btn" href="javascript:history.back()" title="Артка">✕</a>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="hero-badge">ПРОГРАММА</div>
+    <h1>НУР СҮРӨӨСҮНҮН<br><span>ТАФСИРИ</span></h1>
+    <p class="hero-sub">
+      Устаза Махабат Таирова<br>
+      10 жылдык илим ээси • 4 ижааза ээси<br>
+      @mahabattair
+    </p>
+    <div class="welcome-card">
+      <p>Жашооңузга нур таратуучу «Нур сүрөөсүнүн тафсири» сабактарына кош келиңиз ✨</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num">16</div>
+      <div class="stat-label">Сабак</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">1,5</div>
+      <div class="stat-label">Ай</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3<span style="font-size:15px">-июнь</span></div>
+      <div class="stat-label">Старт</div>
+    </div>
+  </div>
+
+  <div class="section-title">Программа</div>
+
+  <div class="lesson-card" style="animation-delay:0.05s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">📖</div>
+      <div>
+        <div class="lesson-num-label">1-САБАК</div>
+        <div class="lesson-title">Нур сүрөсүнө киришүү</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Нур сүрөсүнүн жүрөккө таасири</li>
+        <li>Бул сүрө аялга эмнени айтып жатат?</li>
+        <li>Жашоомдо нур барбы?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.1s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">📵</div>
+      <div>
+        <div class="lesson-num-label">2-САБАК</div>
+        <div class="lesson-title">Зына – коомду бузган күнөө</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Зынаанын зыяны жана чаралары</li>
+        <li>Азыркы заманда зынанын формалары (онлайн, социалдык тармактар)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.15s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">🕊️</div>
+      <div>
+        <div class="lesson-num-label">3-САБАК</div>
+        <div class="lesson-title">Каралоонун оор күнөөсү (Ифк окуясы)</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Айша энебизге карата жалаа</li>
+        <li>Ушак, жалаа, кине аялдардын тил күнөөсү</li>
+        <li>Ишенимди сактоо жана шек кылбоо</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.2s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">🎭</div>
+      <div>
+        <div class="lesson-num-label">4-САБАК</div>
+        <div class="lesson-title">Жалган сүйлөө жана тилдин адеби</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Көп жалган айтуу – ибадаттын алсыздыгы</li>
+        <li>Тил аркылуу күнөөгө батуунун түрлөрү</li>
+        <li>Күнүмдүк жашоодогу жалган (шылтоолор)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.25s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">👁️</div>
+      <div>
+        <div class="lesson-num-label">5-САБАК</div>
+        <div class="lesson-title">Уят жана көздү коргоо</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Көздүн зинасы деген эмне?</li>
+        <li>Уяттуу жүрүм-турум аял үчүн канчалык маанилүү?</li>
+        <li>Соц. тармактагы уятсыздык</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.3s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">🧕</div>
+      <div>
+        <div class="lesson-num-label">6-САБАК</div>
+        <div class="lesson-title">Хижаб – кордук эмес, коргоо</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Хижабдын шарияттагы орду</li>
+        <li>Аялдын зыйнаты аманат</li>
+        <li>Ички жана сырткы уят</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.35s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">🌙</div>
+      <div>
+        <div class="lesson-num-label">7-САБАК</div>
+        <div class="lesson-title">Жоолук – жүрөктөгү ыймандын сырткы чагылышы</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Жоолук – символ эмес, буйрук</li>
+        <li>Нур сүрөсүндөгү кийим маселеси</li>
+        <li>Эмне үчүн айымдар хижабдан качат?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.4s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">🔇</div>
+      <div>
+        <div class="lesson-num-label">8-САБАК</div>
+        <div class="lesson-title">Адепсиз сүйлөө – жүрөктүн караңгылыгы</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Кыйкырып сүйлөө, жаман сөздөр</li>
+        <li>Күйөөгө, балага, башка аялдарга болгон мамиле</li>
+        <li>Зикрди көбөйтүү – тилди тазалоо</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.45s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">🚪</div>
+      <div>
+        <div class="lesson-num-label">9-САБАК</div>
+        <div class="lesson-title">Үйгө уруксатсыз кирбөө – адеп жана коопсуздук</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Үй-бүлөлүк купуялуулук</li>
+        <li>Үйдө айымдар бар кезде келгендердин адеби</li>
+        <li>Үй — аялдын бейпилдиги</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.5s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">💍</div>
+      <div>
+        <div class="lesson-num-label">10-САБАК</div>
+        <div class="lesson-title">Бойдокторду үйлөндүрүү – зынадан сактоо</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Адал сүйүүнүн жолу</li>
+        <li>Турмуш курууга болгон туура ниет</li>
+        <li>Жалгыздык – ибадатка мүмкүндүк, бирок азгырыкка да себеп</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.55s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">🤲</div>
+      <div>
+        <div class="lesson-num-label">11-САБАК</div>
+        <div class="lesson-title">Ибадат – аялдын ички жарыгы</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Намаз, зикр, дубанын таасири</li>
+        <li>Намаз жок аял – заардуу, арыган аял</li>
+        <li>Ички тынчтык намаз менен келет</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.6s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">✨</div>
+      <div>
+        <div class="lesson-num-label">12-САБАК</div>
+        <div class="lesson-title">Аллахтын нурун чагылдырган күзгү</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Нур сүрөөсүнүн 35-аяты: Аллах – нур</li>
+        <li>Жүрөктөгү караңгылык менен күрөш</li>
+        <li>Руханий тынчтыкка жетүүнүн жолу</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.65s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">🏡</div>
+      <div>
+        <div class="lesson-num-label">13-САБАК</div>
+        <div class="lesson-title">Үй ичиндеги адеп</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Балдардын уруксат суроо маданияты</li>
+        <li>Үй — тарбия мектеби</li>
+        <li>Жаштарга адал сүйүүнү үйрөтүү</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.7s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">🌸</div>
+      <div>
+        <div class="lesson-num-label">14–15-САБАК</div>
+        <div class="lesson-title">Шайтанга эшик ачкан аракеттер</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Коомдо тынч, сыпаа жана зирек аял</li>
+        <li>Сүрөт, видео, өзүн көрсөтүү – шайтандын капканы</li>
+        <li>Ар бир аял – үй-бүлөнүн жана коомдун нуру</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lesson-card" style="animation-delay:0.75s">
+    <div class="lesson-top">
+      <div class="lesson-emoji">💛</div>
+      <div>
+        <div class="lesson-num-label">16-САБАК</div>
+        <div class="lesson-title">Жүрөгүмө нур келди – эми эмне кылам?</div>
+      </div>
+    </div>
+    <div class="lesson-body">
+      <ul class="lesson-points">
+        <li>Жыйынтык: жашоом кандай өзгөрдү?</li>
+        <li>Планың: «16 күндөн кийинки мен»</li>
+        <li>«Нур сүрөсү – менин досум» деген сезимди сактоо</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="start-banner">
+    <div class="label">СТАРТ</div>
+    <div class="date">3-Июнь 🌙</div>
+    <div class="label">Узактыгы 1,5 ай • 16 сабак</div>
+  </div>
+
+  <div class="footer">
+    <p class="footer-text">Менеджер жакында байланышат 🤍<br>@mahabattair</p>
+  </div>
+
+</div>
+</body>
+</html>
